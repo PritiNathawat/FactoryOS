@@ -1,0 +1,47 @@
+/*
+ * FactoryOS Global Styles
+ * ========================
+ * Minimal global CSS. MUI's CssBaseline (applied via ThemeRegistry)
+ * handles the browser reset and body defaults from our theme.
+ *
+ * Only rules that must exist before any React component renders belong here.
+ */
+
+/* Prevent horizontal scroll on mobile */
+html {
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling for anchor navigation */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Ensure images are responsive by default */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default input/button font inheritance (browsers override this) */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Avoid text overflow in long words */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}

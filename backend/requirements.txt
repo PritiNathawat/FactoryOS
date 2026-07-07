@@ -1,0 +1,35 @@
+# ============================================================
+# FactoryOS — Backend Dependencies
+#
+# PYTHON VERSION: Requires Python 3.11 (3.12 or 3.13 also fine).
+# Python 3.14 is NOT supported — pydantic-core has no cp314 wheels yet.
+#
+# SETUP:
+#   py -3.11 -m venv venv
+#   venv\Scripts\Activate.ps1
+#   pip install -r requirements.txt
+#
+# PRODUCTION (PostgreSQL):
+#   pip install -r requirements-prod.txt
+# ============================================================
+
+# ─── Web Framework ───────────────────────────────────────────
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+
+# ─── Data Validation & Settings ──────────────────────────────
+pydantic==2.10.3
+pydantic-settings==2.7.0
+
+# ─── Database ────────────────────────────────────────────────
+sqlalchemy==2.0.36          # ORM — uses 2.0 async-native API throughout
+alembic==1.14.0             # Schema migrations
+aiosqlite==0.20.0           # Async SQLite driver — pure Python, no compilation
+
+# ─── AI Platform ─────────────────────────────────────────────
+# google-genai: Unified Google AI SDK — Gemini 2.0, async-native
+# 1.16.0 was yanked from PyPI; 1.17.0 is the current stable release.
+google-genai==1.17.0
+
+# ─── Utilities ───────────────────────────────────────────────
+python-dotenv==1.0.1        # .env file loading for local development

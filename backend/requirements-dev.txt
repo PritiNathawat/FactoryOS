@@ -1,0 +1,18 @@
+# ============================================================
+# FactoryOS — Development & Testing Dependencies
+#
+# Inherits all production packages. Never install this in production.
+# ============================================================
+-r requirements.txt
+
+# ─── Testing ─────────────────────────────────────────────────
+pytest==8.3.4
+pytest-asyncio==0.24.0          # Enables `async def test_` functions
+httpx==0.28.1                   # Async HTTP client — used by FastAPI TestClient
+
+# ─── Code Quality ────────────────────────────────────────────
+ruff==0.8.6                     # Unified linter + formatter (replaces flake8, black, isort)
+mypy==1.13.0                    # Static type checker
+
+# ─── Type Stubs ──────────────────────────────────────────────
+types-python-dotenv==1.0.0.20241006

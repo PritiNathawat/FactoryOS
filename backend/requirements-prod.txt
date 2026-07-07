@@ -1,0 +1,14 @@
+# ============================================================
+# FactoryOS — Production-Only Dependencies
+#
+# Install ON TOP of requirements.txt when deploying to PostgreSQL:
+#   pip install -r requirements.txt -r requirements-prod.txt
+#
+# These packages require Microsoft Visual C++ Build Tools (MSVC)
+# and are NOT suitable for development on machines without it.
+# ============================================================
+
+# ─── PostgreSQL Async Driver ──────────────────────────────────
+# asyncpg requires Cython + MSVC. Use only on Linux (Docker) or
+# on Windows machines with Visual C++ Build Tools installed.
+asyncpg==0.30.0

@@ -1,0 +1,133 @@
+{
+  "dataset_version": "1.0.0",
+  "description": "FactoryOS evaluation scenarios for the AI Platform analysis pipeline. Each scenario includes an incident input, expected characteristics of the AI output, and evaluation criteria.",
+  "scenarios": [
+    {
+      "id": "EVAL-001",
+      "name": "CNC Bearing Failure (High Severity)",
+      "category": "equipment_failure",
+      "expected_severity": "high",
+      "input": {
+        "incident_id": "EVAL-001",
+        "title": "CNC Machine M-12 Bearing Failure — Bay 3",
+        "description": "Machine M-12 (CNC Milling Machine) in Bay 3, Line A stopped production due to a suspected spindle bearing failure. A loud grinding noise was observed for 3 days before the machine tripped on thermal overload and shut down. The machine was producing AEC-4412-B for Aerospace Components Ltd. with a critical deadline of July 8, 2026.",
+        "equipment_id": "M-12",
+        "location": "Bay 3, Line A",
+        "severity": "high"
+      },
+      "evaluation_criteria": {
+        "must_produce_three_plans": true,
+        "plan_types_required": ["economical", "rapid", "balanced"],
+        "min_confidence_overall": 0.5,
+        "must_consult_maintenance_agent": true,
+        "must_have_executive_summary": true,
+        "requires_human_approval_expected": true,
+        "min_steps_per_plan": 2
+      },
+      "notes": "The canonical M-12 demo scenario. Used for demonstrations and baseline evaluation."
+    },
+    {
+      "id": "EVAL-002",
+      "name": "Coolant System Failure (Critical Severity)",
+      "category": "equipment_failure",
+      "expected_severity": "critical",
+      "input": {
+        "incident_id": "EVAL-002",
+        "title": "Primary Coolant Loop Failure — Production Line B",
+        "description": "The primary coolant circulation pump for Production Line B has seized. Multiple CNC machines are shutting down on thermal overload. Coolant temperature reached 95°C before automatic shutoff. Estimated 8 machines affected. Safety officer has been notified. Risk of damage to precision spindles and bearings if machines are restarted without coolant flow.",
+        "equipment_id": "PUMP-B-01",
+        "location": "Line B Coolant Room",
+        "severity": "critical"
+      },
+      "evaluation_criteria": {
+        "must_produce_three_plans": true,
+        "plan_types_required": ["economical", "rapid", "balanced"],
+        "min_confidence_overall": 0.4,
+        "must_have_executive_summary": true,
+        "requires_human_approval_expected": true,
+        "rapid_plan_downtime_less_than_economical": true
+      },
+      "notes": "Critical severity — should always require human approval."
+    },
+    {
+      "id": "EVAL-003",
+      "name": "Inventory Shortage (Medium Severity)",
+      "category": "supply_chain",
+      "expected_severity": "medium",
+      "input": {
+        "incident_id": "EVAL-003",
+        "title": "Critical Parts Shortage — Bearing SKF 6205",
+        "description": "Stock of SKF 6205 bearings (critical spare part for CNC spindles) has dropped to 2 units, below the minimum reorder threshold of 10 units. Lead time from primary supplier is 3-4 weeks. Two machines are currently scheduled for preventive bearing replacement next week.",
+        "equipment_id": "WAREHOUSE-A",
+        "location": "Parts Warehouse, Section A",
+        "severity": "medium"
+      },
+      "evaluation_criteria": {
+        "must_produce_three_plans": true,
+        "plan_types_required": ["economical", "rapid", "balanced"],
+        "min_confidence_overall": 0.5,
+        "must_consult_inventory_agent": true,
+        "must_have_executive_summary": true,
+        "requires_human_approval_expected": false
+      },
+      "notes": "Supply chain scenario — Inventory Agent should be the primary contributor."
+    },
+    {
+      "id": "EVAL-004",
+      "name": "Production Deadline Risk (High Severity)",
+      "category": "production_risk",
+      "expected_severity": "high",
+      "input": {
+        "incident_id": "EVAL-004",
+        "title": "Production Deadline Risk — Aerospace Order AEC-4412-B",
+        "description": "Machine M-12 failure has put the Aerospace Components Ltd. order AEC-4412-B at risk. The order is for 500 precision milled parts with a contractual delivery deadline of July 8, 2026. As of today, only 320 parts have been completed. The remaining 180 parts require 45 hours of CNC machining time. Penalty clauses of $50,000/day apply for late delivery.",
+        "equipment_id": "M-12",
+        "location": "Bay 3, Line A",
+        "severity": "high"
+      },
+      "evaluation_criteria": {
+        "must_produce_three_plans": true,
+        "plan_types_required": ["economical", "rapid", "balanced"],
+        "min_confidence_overall": 0.5,
+        "must_consult_production_agent": true,
+        "must_consult_cost_agent": true,
+        "must_have_executive_summary": true,
+        "requires_human_approval_expected": true
+      },
+      "notes": "Combines production and cost scenarios. Both Production and Cost agents should be primary contributors."
+    },
+    {
+      "id": "EVAL-005",
+      "name": "Minor Sensor Fault (Low Severity)",
+      "category": "sensor_fault",
+      "expected_severity": "low",
+      "input": {
+        "incident_id": "EVAL-005",
+        "title": "Temperature Sensor Fault — Machine M-03",
+        "description": "Machine M-03 is reporting erratic temperature readings from the spindle temperature sensor. The sensor appears to be giving intermittent false high readings (130°C when normal operating temperature is 45°C). The machine has been configured to ignore the faulty sensor and is currently operating normally. This is a low-priority maintenance item.",
+        "equipment_id": "M-03",
+        "location": "Bay 1, Line A",
+        "severity": "low"
+      },
+      "evaluation_criteria": {
+        "must_produce_three_plans": true,
+        "plan_types_required": ["economical", "rapid", "balanced"],
+        "min_confidence_overall": 0.5,
+        "must_have_executive_summary": true,
+        "requires_human_approval_expected": false,
+        "economical_plan_cheapest": true
+      },
+      "notes": "Low severity scenario. Should not require human approval. Economical plan should be the most obvious recommendation."
+    }
+  ],
+  "evaluation_metrics": {
+    "schema_compliance": "All OrchestratorResult fields present and correctly typed",
+    "plan_completeness": "All three plan types (economical, rapid, balanced) generated",
+    "confidence_range": "confidence_overall between 0.0 and 1.0",
+    "executive_summary_quality": "Non-empty executive summary with at least 50 characters",
+    "agent_participation": "At least 3 agents consulted per analysis",
+    "human_approval_correctness": "High/Critical severity should set requires_human_approval=True",
+    "cost_ordering": "Economical plan should generally have lowest cost estimate",
+    "time_ordering": "Rapid plan should generally have lowest downtime estimate"
+  }
+}

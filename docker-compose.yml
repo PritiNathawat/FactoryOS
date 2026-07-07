@@ -1,0 +1,63 @@
+version: "3.9"
+
+# FactoryOS — Docker Compose for local development and staging
+#
+# Services:
+#   backend  — FastAPI (Python 3.11) on port 8000
+#   frontend — Next.js 16 on port 3000
+#
+# Usage:
+#   docker-compose up --build
+#   docker-compose up --build -d   # detached
+#
+# Environment:
+#   Copy .env.example to .env and set GEMINI_API_KEY for live AI responses.
+#   Without GEMINI_API_KEY, the AI Platform runs in MOCK mode (fully functional).
+
+services:
+  # ── FastAPI Backend ──────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: factoryos-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.0-flash}
+      - DATABASE_URL=sqlite+aiosqlite:///./factoryos.db
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      # Persist the SQLite database across container restarts
+      - backend_data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # ── Next.js Frontend ─────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_INTERNAL_URL=http://backend:8000
+    container_name: factoryos-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_INTERNAL_URL=http://backend:8000
+      - NODE_ENV=production
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  backend_data:
+    driver: local

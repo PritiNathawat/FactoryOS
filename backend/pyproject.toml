@@ -1,0 +1,26 @@
+[tool.pytest.ini_options]
+# FactoryOS pytest configuration
+#
+# Run tests:
+#   cd backend
+#   # Option 1: venv activated
+#   python -m pytest tests/ -v
+#
+#   # Option 2: full path (Windows)
+#   py -3.11 -m pytest tests/ -v --import-mode=importlib
+#
+# All tests run in MOCK mode (no GEMINI_API_KEY needed).
+
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends.legacy:build"
