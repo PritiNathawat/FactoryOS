@@ -1,7 +1,11 @@
 # 🏭 FactoryOS
 
-> **Production-grade Multi-Agent Manufacturing Operations Platform**  
-> Built for the Google AI Agents Intensive Capstone — Agents for Business track.
+> **AI-powered Multi-Agent Manufacturing Decision Intelligence Platform**
+
+Built for the **Google AI Agents Intensive Capstone** (Agents for Business).
+
+FactoryOS helps plant managers respond to operational disruptions by coordinating multiple specialized AI agents that analyze maintenance, inventory, production schedules, and operational costs before recommending the best recovery strategy.
+
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)](https://fastapi.tiangolo.com/)
@@ -29,6 +33,25 @@ The manufacturing domain is the **business scenario**. The real demonstration is
 - Skills layer for deterministic pre-processing (5 skills)
 - Human-in-the-loop approval workflow
 - Production-grade FastAPI + Next.js architecture
+
+---
+## 📸 Screenshots
+
+## Dashboard
+
+![Dashboard](docs/images/dashboard.png)
+
+## Incident Submission
+
+![Incident Submission](docs/images/incident.png)
+
+## Decision Center
+
+![Decision Center](docs/images/decision.png)
+
+## Executive Report
+
+![Executive Report](docs/images/temp.png)
 
 ---
 
@@ -163,7 +186,7 @@ FactoryOS/
 ### 1. Clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/FactoryOS.git
+git clone https://github.com/PritiNathawat/FactoryOS.git
 cd FactoryOS
 ```
 
@@ -217,9 +240,10 @@ docker-compose up --build
 
 ---
 
-## AI Platform Demo
+## 🎯 Running FactoryOS
 
 ### Option A: Web UI (Recommended)
+FactoryOS works even without a Gemini API key by automatically switching to realistic Mock Mode.
 
 1. Open **http://localhost:3000**
 2. Navigate to **Incidents** in the sidebar
@@ -334,6 +358,10 @@ Zero infrastructure for development. The async driver swap (`aiosqlite` → `asy
 - 🔲 Mobile app
 
 ---
+
+## Acknowledgements
+
+Built as part of the Google AI Agents Intensive Capstone using Google Gemini, FastAPI, Next.js, Material UI, and the Model Context Protocol (MCP).
 
 ## License
 
